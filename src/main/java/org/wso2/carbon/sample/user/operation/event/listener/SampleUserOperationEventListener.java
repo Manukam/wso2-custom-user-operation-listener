@@ -2,9 +2,10 @@ package org.wso2.carbon.sample.user.operation.event.listener;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.xpath.operations.Bool;
 import org.wso2.carbon.identity.core.util.IdentityUtil;
+import org.wso2.carbon.identity.handler.event.account.lock.exception.AccountLockException;
 import org.wso2.carbon.identity.mgt.constants.IdentityMgtConstants;
+import org.wso2.carbon.user.core.UserCoreConstants;
 import org.wso2.carbon.user.core.UserStoreException;
 import org.wso2.carbon.user.core.UserStoreManager;
 import org.wso2.carbon.user.core.common.AbstractUserOperationEventListener;
@@ -26,9 +27,9 @@ public class SampleUserOperationEventListener extends AbstractUserOperationEvent
         return 1356;
     }
 
-
     @Override
     public boolean doPreAuthenticate(String userName, Object credential, UserStoreManager userStoreManager) throws UserStoreException {
+        String message;
         if (properties.isEmpty()) {
             readPropertiesFromFile();
         }
@@ -41,7 +42,13 @@ public class SampleUserOperationEventListener extends AbstractUserOperationEvent
             }
             String[] excludedUsers = excludedUserSet.split(",");
             if (!Arrays.asList(excludedUsers).contains(userName)) {
-                throw new UserStoreException("User Account is temporarily blocked");
+                message = "Account is locked for user " + userName + " in user store. Cannot login until the " +
+                        "account is unlocked.";
+                try {
+                    throw new AccountLockException(UserCoreConstants.ErrorCode.USER_IS_LOCKED, message);
+                } catch (AccountLockException e) {
+                    throw new UserStoreException(e);
+                }
             } else {
                 return true;
             }

@@ -15,7 +15,6 @@ import java.util.Properties;
         immediate = true
 
 )
-
 public class CustomUserOperationEventListenerDSComponent {
     private static Log log = LogFactory.getLog(CustomUserOperationEventListenerDSComponent.class);
 
