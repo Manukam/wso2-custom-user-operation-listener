@@ -35,7 +35,7 @@ public class SampleUserOperationEventListener extends AbstractUserOperationEvent
         Boolean isLockAccounts = Boolean.valueOf(this.properties.getProperty("Custom.Accounts.Lock").trim());
         log.info("Accounts Locked Turned :" + isLockAccounts);
         if (isLockAccounts) {
-            String excludedUserSet = this.properties.getProperty("Custom.Accounts.Lock.Exclude.Users");
+            String excludedUserSet = this.properties.getProperty("Custom.Accounts.Lock.Exclude.Users").trim();
             if(excludedUserSet == null || excludedUserSet.isEmpty()){
                 throw new UserStoreException("User Account is temporarily blocked");
             }
