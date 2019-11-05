@@ -2,6 +2,7 @@ package org.wso2.carbon.sample.user.operation.event.listener;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.xpath.operations.Bool;
 import org.wso2.carbon.identity.core.util.IdentityUtil;
 import org.wso2.carbon.identity.mgt.constants.IdentityMgtConstants;
 import org.wso2.carbon.user.core.UserStoreException;
@@ -28,21 +29,18 @@ public class SampleUserOperationEventListener extends AbstractUserOperationEvent
 
     @Override
     public boolean doPreAuthenticate(String userName, Object credential, UserStoreManager userStoreManager) throws UserStoreException {
-
         if (properties.isEmpty()) {
             readPropertiesFromFile();
         }
-//        for (Enumeration<?> e = properties.propertyNames(); e.hasMoreElements(); ) {
-//            String name = (String) e.nextElement();
-//            String value = properties.getProperty(name);
-//            // now you have name and value
-//            log.info(name);
-//            log.info(value);
-//        }
-        Boolean lockAccounts = Boolean.valueOf(this.properties.getProperty("Custom.Lock.Accounts").trim());
-        String[] excludedUsers = this.properties.getProperty("Custom.Account.Lock.Exclude.Users").split(",");
-        log.info("Accounts Locked Turned :" + lockAccounts);
-        if (lockAccounts) {
+//        Boolean isLockAccounts;
+        Boolean isLockAccounts = Boolean.valueOf(this.properties.getProperty("Custom.Accounts.Lock"));
+        log.info("Accounts Locked Turned :" + isLockAccounts);
+        if (isLockAccounts) {
+            String excludedUserSet = this.properties.getProperty("Custom.Accounts.Lock.Exclude.Users");
+            if(excludedUserSet.isEmpty()){
+                return false;
+            }
+            String[] excludedUsers = excludedUserSet.split(",");
             if (!Arrays.asList(excludedUsers).contains(userName)) {
                 throw new UserStoreException("User Account is temporarily blocked");
             } else {
