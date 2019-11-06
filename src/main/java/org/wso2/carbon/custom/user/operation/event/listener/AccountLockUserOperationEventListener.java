@@ -3,9 +3,7 @@ package org.wso2.carbon.custom.user.operation.event.listener;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.identity.core.util.IdentityUtil;
-import org.wso2.carbon.identity.handler.event.account.lock.exception.AccountLockException;
 import org.wso2.carbon.identity.mgt.constants.IdentityMgtConstants;
-import org.wso2.carbon.user.core.UserCoreConstants;
 import org.wso2.carbon.user.core.UserStoreException;
 import org.wso2.carbon.user.core.UserStoreManager;
 import org.wso2.carbon.user.core.common.AbstractUserOperationEventListener;
@@ -38,23 +36,17 @@ public class AccountLockUserOperationEventListener extends AbstractUserOperation
             readPropertiesFromFile();
         }
         Boolean isLockAccounts = Boolean.valueOf(this.properties.getProperty("Custom.Accounts.Lock").trim());
-        log.info("Accounts Locked Turned :" + isLockAccounts);
         if (isLockAccounts) {
             message = "Account is locked for user " + userName + " in user store. Cannot login until the " +
                     "account is unlocked.";
             String excludedUserSet = this.properties.getProperty("Custom.Accounts.Lock.Exclude.Users").trim();
-            if(excludedUserSet == null || excludedUserSet.isEmpty()){
+            if (excludedUserSet == null || excludedUserSet.isEmpty()) {
                 log.info("No users defined to be excluded from Account lock process.");
                 throw new UserStoreException(message);
             }
             String[] excludedUsers = excludedUserSet.split(",");
             if (!Arrays.asList(excludedUsers).contains(userName)) {
-//                throw new UserStoreException(message);
-                try {
-                    throw new AccountLockException(UserCoreConstants.ErrorCode.USER_IS_LOCKED, message);
-                } catch (AccountLockException e) {
-                    throw new UserStoreException(UserCoreConstants.ErrorCode.USER_IS_LOCKED);
-                }
+                throw new UserStoreException(message);
             } else {
                 return true;
             }
