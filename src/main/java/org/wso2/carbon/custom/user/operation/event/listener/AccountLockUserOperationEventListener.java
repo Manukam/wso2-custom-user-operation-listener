@@ -3,7 +3,6 @@ package org.wso2.carbon.custom.user.operation.event.listener;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.custom.user.operation.event.listener.internal.CustomUserOperationEventListenerDSComponent;
-import org.wso2.carbon.custom.user.operation.event.listener.internal.DataHolder;
 import org.wso2.carbon.identity.core.model.IdentityErrorMsgContext;
 import org.wso2.carbon.identity.core.util.IdentityUtil;
 import org.wso2.carbon.user.core.UserCoreConstants;
