@@ -3,6 +3,7 @@ package org.wso2.carbon.custom.user.operation.event.listener.internal;
 import org.wso2.carbon.custom.user.operation.event.listener.AccountLockUserOperationEventListener;
 import org.wso2.carbon.user.core.service.RealmService;
 
+
 public class DataHolder {
     private static RealmService realmService;
     private static volatile DataHolder dataHolder;
@@ -22,9 +23,7 @@ public class DataHolder {
                     customUserOperationEventListener = new AccountLockUserOperationEventListener();
                 }
             }
-
         }
-
         return dataHolder;
     }
 
