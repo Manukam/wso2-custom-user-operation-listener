@@ -56,7 +56,6 @@ public class AccountLockUserOperationEventListener extends AbstractUserOperation
     }
 
     private void readPropertiesFromFile() {
-        log.info("Reading Custom User Lock properties form file");
         InputStream inStream = null;
         File pipConfigXml = new File(IdentityUtil.getIdentityConfigDirPath(), IdentityMgtConstants.PropertyConfig
                 .CONFIG_FILE_NAME);
