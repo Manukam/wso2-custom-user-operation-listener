@@ -40,6 +40,7 @@ public class SampleUserOperationEventListener extends AbstractUserOperationEvent
                     "account is unlocked.";
             String excludedUserSet = this.properties.getProperty("Custom.Accounts.Lock.Exclude.Users").trim();
             if(excludedUserSet == null || excludedUserSet.isEmpty()){
+                log.info("No users defined to be excluded from Account lock process.");
                 throw new UserStoreException(message);
             }
             String[] excludedUsers = excludedUserSet.split(",");
