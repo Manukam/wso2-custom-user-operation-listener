@@ -13,7 +13,7 @@
 * Navigate to `IS_HOME/repository/conf/identity` and open the **identity-mgt.properties** file and add the following lines.
 - To turn account locking on/off
 ```
-Custom.Accounts.Lock=true
+Custom.Accounts.Lock=true/false
 ``` 
  - To define the usernames of users (Comma separated) whose accounts needs to be excluded from the account locking process. 
 ```
