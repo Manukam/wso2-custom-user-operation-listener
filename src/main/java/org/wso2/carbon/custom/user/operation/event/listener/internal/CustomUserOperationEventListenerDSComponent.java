@@ -10,7 +10,7 @@ import org.wso2.carbon.user.core.service.RealmService;
 import java.util.Properties;
 
 @Component(
-        name = "org.wso2.carbon.sample.user.operation.event.listener",
+        name = "org.wso2.carbon.custom.user.operation.event.listener",
         immediate = true
 
 )
@@ -25,13 +25,13 @@ public class CustomUserOperationEventListenerDSComponent {
                 UserOperationEventListener.class.getName(), DataHolder.getInstance().getCustomUserOperationEventListener(), new Properties());
 
 
-        log.info("SampleUserOperationEventListenerDSComponent bundle activated successfully..");
+        log.info("CustomUserOperationEventListenerDSComponent bundle activated successfully..");
     }
 
     @Deactivate
     protected void deactivate(ComponentContext context) {
         if (log.isDebugEnabled()) {
-            log.debug("SampleUserOperationEventListenerDSComponent is deactivated ");
+            log.debug("CustomUserOperationEventListenerDSComponent is deactivated ");
         }
     }
 

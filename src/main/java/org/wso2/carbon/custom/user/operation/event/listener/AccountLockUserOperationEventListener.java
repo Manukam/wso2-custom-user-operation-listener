@@ -2,8 +2,10 @@ package org.wso2.carbon.custom.user.operation.event.listener;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.wso2.carbon.identity.core.model.IdentityErrorMsgContext;
 import org.wso2.carbon.identity.core.util.IdentityUtil;
 import org.wso2.carbon.identity.mgt.constants.IdentityMgtConstants;
+import org.wso2.carbon.user.core.UserCoreConstants;
 import org.wso2.carbon.user.core.UserStoreException;
 import org.wso2.carbon.user.core.UserStoreManager;
 import org.wso2.carbon.user.core.common.AbstractUserOperationEventListener;
@@ -46,7 +48,9 @@ public class AccountLockUserOperationEventListener extends AbstractUserOperation
             }
             String[] excludedUsers = excludedUserSet.split(",");
             if (!Arrays.asList(excludedUsers).contains(userName)) {
-                throw new UserStoreException(message);
+                IdentityErrorMsgContext customErrorMessageContext = new IdentityErrorMsgContext(UserCoreConstants.ErrorCode.USER_IS_LOCKED);
+                IdentityUtil.setIdentityErrorMsg(customErrorMessageContext);
+                throw new UserStoreException(UserCoreConstants.ErrorCode.USER_IS_LOCKED);
             } else {
                 return true;
             }
