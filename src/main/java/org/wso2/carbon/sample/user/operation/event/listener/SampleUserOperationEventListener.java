@@ -44,7 +44,6 @@ public class SampleUserOperationEventListener extends AbstractUserOperationEvent
             }
             String[] excludedUsers = excludedUserSet.split(",");
             if (!Arrays.asList(excludedUsers).contains(userName)) {
-
                 throw new UserStoreException(message);
 //                try {
 //                    throw new AccountLockException(UserCoreConstants.ErrorCode.USER_IS_LOCKED, message);
