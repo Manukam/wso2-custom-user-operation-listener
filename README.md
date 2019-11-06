@@ -1,6 +1,6 @@
 # wso2-custom-user-operation-listener
  
-> A Custom User operations listener for WSO2 IS 5.7.0 that locks all user accounts excluding select few users (Configurable).
+> A Custom User operations listener for WSO2 Identity Server that locks all user accounts excluding select few users (Configurable).
 
 ## Build Setup
 
