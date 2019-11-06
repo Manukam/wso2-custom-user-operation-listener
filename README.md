@@ -8,7 +8,7 @@
 ``` bash
   mvn clean install
 ```
-* Navigate to the `/target` folder in the project directory and copy and paste the `org.wso2.carbon.sample.user.operation.event.listener-1.0.0.jar` to `IS_HOME/repository/components/dropins`
+* Navigate to the `/target` folder in the project directory and copy and paste the `org.wso2.carbon.custom.user.operation.event.listener-1.0.0.jar` to `IS_HOME/repository/components/dropins`
 
 * Navigate to `IS_HOME/repository/conf/identity` and open the **identity-mgt.properties** file and add the following lines.
 - To turn account locking on/off
