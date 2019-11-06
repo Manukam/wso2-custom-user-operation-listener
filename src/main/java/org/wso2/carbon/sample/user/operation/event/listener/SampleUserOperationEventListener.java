@@ -36,19 +36,21 @@ public class SampleUserOperationEventListener extends AbstractUserOperationEvent
         Boolean isLockAccounts = Boolean.valueOf(this.properties.getProperty("Custom.Accounts.Lock").trim());
         log.info("Accounts Locked Turned :" + isLockAccounts);
         if (isLockAccounts) {
+            message = "Account is locked for user " + userName + " in user store. Cannot login until the " +
+                    "account is unlocked.";
             String excludedUserSet = this.properties.getProperty("Custom.Accounts.Lock.Exclude.Users").trim();
             if(excludedUserSet == null || excludedUserSet.isEmpty()){
-                throw new UserStoreException("User Account is temporarily blocked");
+                throw new UserStoreException(message);
             }
             String[] excludedUsers = excludedUserSet.split(",");
             if (!Arrays.asList(excludedUsers).contains(userName)) {
-                message = "Account is locked for user " + userName + " in user store. Cannot login until the " +
-                        "account is unlocked.";
-                try {
-                    throw new AccountLockException(UserCoreConstants.ErrorCode.USER_IS_LOCKED, message);
-                } catch (AccountLockException e) {
-                    throw new UserStoreException(e);
-                }
+
+                throw new UserStoreException(message);
+//                try {
+//                    throw new AccountLockException(UserCoreConstants.ErrorCode.USER_IS_LOCKED, message);
+//                } catch (AccountLockException e) {
+//                    throw new UserStoreException(e);
+//                }
             } else {
                 return true;
             }
