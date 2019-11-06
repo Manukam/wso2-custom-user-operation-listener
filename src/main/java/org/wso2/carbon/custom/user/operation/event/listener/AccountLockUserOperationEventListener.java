@@ -40,7 +40,7 @@ public class AccountLockUserOperationEventListener extends AbstractUserOperation
             if (!Arrays.asList(excludedUsers).contains(userName)) {
                 IdentityErrorMsgContext customErrorMessageContext = new IdentityErrorMsgContext(UserCoreConstants.ErrorCode.USER_IS_LOCKED);
                 IdentityUtil.setIdentityErrorMsg(customErrorMessageContext);
-                throw new UserStoreException(UserCoreConstants.ErrorCode.USER_IS_LOCKED);
+                throw new UserStoreException(message);
             } else {
                 return true;
             }
