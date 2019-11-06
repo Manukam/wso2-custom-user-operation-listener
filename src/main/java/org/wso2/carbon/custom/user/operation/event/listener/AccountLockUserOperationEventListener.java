@@ -1,4 +1,4 @@
-package org.wso2.carbon.sample.user.operation.event.listener;
+package org.wso2.carbon.custom.user.operation.event.listener;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -10,13 +10,17 @@ import org.wso2.carbon.user.core.UserStoreException;
 import org.wso2.carbon.user.core.UserStoreManager;
 import org.wso2.carbon.user.core.common.AbstractUserOperationEventListener;
 
-import java.io.*;
+import java.io.File;
+import java.io.InputStream;
+import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.io.FileInputStream;
 import java.util.Arrays;
 import java.util.Properties;
 
-public class SampleUserOperationEventListener extends AbstractUserOperationEventListener {
+public class AccountLockUserOperationEventListener extends AbstractUserOperationEventListener {
 
-    private static Log log = LogFactory.getLog(SampleUserOperationEventListener.class);
+    private static Log log = LogFactory.getLog(AccountLockUserOperationEventListener.class);
     public Properties properties = new Properties();
 
     @Override
@@ -45,12 +49,12 @@ public class SampleUserOperationEventListener extends AbstractUserOperationEvent
             }
             String[] excludedUsers = excludedUserSet.split(",");
             if (!Arrays.asList(excludedUsers).contains(userName)) {
-                throw new UserStoreException(message);
-//                try {
-//                    throw new AccountLockException(UserCoreConstants.ErrorCode.USER_IS_LOCKED, message);
-//                } catch (AccountLockException e) {
-//                    throw new UserStoreException(e);
-//                }
+//                throw new UserStoreException(message);
+                try {
+                    throw new AccountLockException(UserCoreConstants.ErrorCode.USER_IS_LOCKED, message);
+                } catch (AccountLockException e) {
+                    throw new UserStoreException(UserCoreConstants.ErrorCode.USER_IS_LOCKED);
+                }
             } else {
                 return true;
             }
